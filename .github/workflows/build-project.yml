@@ -66,8 +66,9 @@ jobs:
       - name: Create Artifact Folder
         run: |
           mkdir -p artifact
-          cp -r app bootstrap config database public resources routes storage artisan composer.* .env artifact/
+          cp -r app bootstrap config database public resources routes storage tests artisan composer.* package-lock.json package.json .env .env.testing artifact/
           cp -r vendor node_modules artifact/
+
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
