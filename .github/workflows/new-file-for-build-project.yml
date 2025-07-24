@@ -61,7 +61,6 @@ jobs:
           cp -r vendor node_modules artifact/
           cp .env artifact/env
           cp .env.testing artifact/env.testing
-          cp .env.testing
           touch artifact/bootstrap/cache/.keep
 
 
