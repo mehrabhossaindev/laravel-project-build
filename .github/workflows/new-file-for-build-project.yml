@@ -61,7 +61,6 @@ jobs:
           cp -r vendor node_modules artifact/
           cp .env artifact/env
           cp .env.testing artifact/env.testing
-          touch artifact/bootstrap/cache/.keep
 
 
       - name: Upload Artifact
@@ -98,6 +97,11 @@ jobs:
         run: |
           mv env .env
           mv env.testing .env.testing
+
+      - name: Make Cache Folder
+        run: |
+          mkdir -p bootstrap/cache
+          chmod -R 777 bootstrap/cache
           cd bootstrap
           ls -la
 
@@ -113,10 +117,8 @@ jobs:
           sleep 15
           ls -la
 
-
       - name: Generate Application Key
         run: |
-          chmod -R 777 bootstrap/cache
           php artisan key:generate
 
 
