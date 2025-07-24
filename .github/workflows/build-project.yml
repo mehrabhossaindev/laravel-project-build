@@ -115,13 +115,13 @@ jobs:
         run: | 
           sleep 15
           ls -la
-          cat .env.testing
 
 
       - name: Generate Application Key
         run: |
           mv  env.testing .env.testing
           mv  env .env
+          cat .env.testing
           mkdir -p bootstrap/cache
           chmod 777 bootstrap/cache
           php artisan key:generate
