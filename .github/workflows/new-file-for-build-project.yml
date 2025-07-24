@@ -101,9 +101,9 @@ jobs:
       - name: Make Cache Folder
         run: |
           mkdir -p bootstrap/cache
+          mkdir -p storage/framework/views
           chmod -R 777 bootstrap/cache
-          cd bootstrap
-          ls -la
+          chmod -R 777 storage
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
