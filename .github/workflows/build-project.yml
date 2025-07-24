@@ -96,6 +96,12 @@ jobs:
       - name: Generate Application Key
         run: |
           ls -la
+          cd /bootstrap
+          ls -la
+          cd ..
+          cd /vendor
+          ls -la
+          cd ..
           php artisan key:generate
 
 
