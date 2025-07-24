@@ -4,19 +4,19 @@ on:
   push:
     branches:
       - dev
-
+      
   workflow_dispatch:
 
 # env:
 #   APP_ENV: production
 #   DB_PORT: 3306
-environment: dev
+
 
 jobs:
   
   build:
     runs-on: ubuntu-latest
-    
+    environment: dev
 
     steps:
       - name: Checkout Source Code
@@ -45,12 +45,12 @@ jobs:
       - name: Laravel Env Setup
         run: |
           cp .env.example .env
-          echo "DB_CONNECTION=${{$secrets.DB_CONNECTION}}" >> .env
-          echo "DB_HOST=${{$secrets.DB_HOST}}" >> .env
-          echo "DB_PORT=${{$secrets.DB_PORT}}" >> .env
-          echo "DB_DATABASE=${{$secrets.DB_DATABASE}}" >> .env
-          echo "DB_USERNAME=${{$secrets.DB_USERNAME}}" >> .env
-          echo "DB_PASSWORD=${{$secrets.DB_PASSWORD}}" >> .env
+          echo "DB_CONNECTION=${{secrets.DB_CONNECTION}}" >> .env
+          echo "DB_HOST=${{secrets.DB_HOST}}" >> .env
+          echo "DB_PORT=${{secrets.DB_PORT}}" >> .env
+          echo "DB_DATABASE=${{secrets.DB_DATABASE}}" >> .env
+          echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
+          echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
 
       - name: Generate Application Key
         run: |
