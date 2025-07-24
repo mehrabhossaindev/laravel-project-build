@@ -107,6 +107,7 @@ jobs:
       - name: Sleep 15 Second
         run: | 
           sleep 15
+          ls -la
           cat .env.testing
 
 
