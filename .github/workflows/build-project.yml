@@ -93,6 +93,9 @@ jobs:
           extensions: mbstring, xml, bcmath, ctype, fileinfo, json, tokenizer, openssl, pdo, pdo_mysql
           tools: composer:v2
 
+      - name: Sleep 15 Second
+        run: sleep 15
+
       - name: Generate Application Key
         run: |
           mkdir -p bootstrap/cache
