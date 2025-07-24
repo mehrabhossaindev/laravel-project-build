@@ -98,6 +98,8 @@ jobs:
         run: |
           mv env .env
           mv env.testing .env.testing
+          cd bootstrap
+          ls -la
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
