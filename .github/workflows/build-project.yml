@@ -95,9 +95,10 @@ jobs:
 
       - name: Generate Application Key
         run: |
+          ls -la
           php artisan key:generate
 
-          
+
       - name: Run Migrations & Tests
         run: |
           php artisan migrate
