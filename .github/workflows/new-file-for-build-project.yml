@@ -1,4 +1,4 @@
-name: Laravel Project Build and Test
+name: New File for Laravel Project Build and Test
 
 on:
   # push:
@@ -44,7 +44,6 @@ jobs:
       - name: Laravel Env Setup
         run: |
           cp .env.example .env
-
           echo "DB_CONNECTION=${{secrets.DB_CONNECTION}}" >> .env
           echo "DB_HOST=${{secrets.DB_HOST}}" >> .env
           echo "DB_PORT=${{secrets.DB_PORT}}" >> .env
@@ -52,25 +51,18 @@ jobs:
           echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
           echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
 
-          echo "DB_CONNECTION=${{secrets.DB_CONNECTION}}" >> .env.testing
-          echo "DB_HOST=${{secrets.DB_HOST}}" >> .env.testing
-          echo "DB_PORT=${{secrets.DB_PORT}}" >> .env.testing
-          echo "DB_DATABASE=${{secrets.DB_DATABASE}}" >> .env.testing
-          echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env.testing
-          echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env.testing
-
-          mv .env.testing env.testing
-          mv .env env
+          cp .env env.testing 
 
 
       - name: Create Artifact Folder
         run: |
           mkdir -p artifact
-          cp -r app bootstrap config database public resources routes storage tests artisan composer.* package-lock.json package.json env env.testing artifact/
+          cp -r app bootstrap config database public resources routes storage tests artisan composer.* package-lock.json package.json artifact/
           cp -r vendor node_modules artifact/
-          cd artifact
-          ls -la
-          cd ..
+          cp .env artifact/env
+          cp .env.testing artifact/env.testing
+          cp .env.testing
+          touch artifact/bootstrap/cache/.keep
 
 
       - name: Upload Artifact
@@ -103,8 +95,10 @@ jobs:
           name: laravel-app
           path: .
 
-      - name: Download Files Check
-        run: ls -la  
+      - name: Restore .env Files
+        run: |
+          mv env .env
+          mv env.testing .env.testing
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -121,14 +115,11 @@ jobs:
 
       - name: Generate Application Key
         run: |
-          mv  env.testing .env.testing
-          mv  env .env
-          mkdir -p bootstrap/cache
-          chmod 777 bootstrap/cache
+          chmod -R 777 bootstrap/cache
           php artisan key:generate
 
 
       - name: Run Migrations & Tests
         run: |
-          php artisan migrate --env=testing
+          php artisan migrate --env=testing --force
           php artisan test --env=testing
