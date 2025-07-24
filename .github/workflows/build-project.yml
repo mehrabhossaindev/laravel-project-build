@@ -60,7 +60,8 @@ jobs:
           echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env.testing
           echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env.testing
 
-          cat .env.testing
+          mv .env.testing env.testing
+          mv .env env
 
 
       - name: Create Artifact Folder
@@ -119,6 +120,8 @@ jobs:
 
       - name: Generate Application Key
         run: |
+          mv  env.testing .env.testing
+          mv  env .env
           mkdir -p bootstrap/cache
           chmod 777 bootstrap/cache
           php artisan key:generate
