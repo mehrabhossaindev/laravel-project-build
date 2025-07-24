@@ -60,7 +60,7 @@ jobs:
       - name: Create Artifact Folder
         run: |
           mkdir -p artifact
-          cp -r app bootstrap config database public resources routes storage tests artisan composer.* package-lock.json package.json artifact/
+          cp -r app bootstrap config database public resources routes storage tests artisan composer.* package-lock.json package.json phpunit.xml artifact/
           cp -r vendor node_modules artifact/
           cp .env artifact/env
           cp .env.testing artifact/env.testing
