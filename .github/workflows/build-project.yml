@@ -96,7 +96,6 @@ jobs:
       - name: Generate Application Key
         run: |
           mkdir -p bootstrap/cache
-          chown -R root:root bootstrap/cache
           chmod 777 bootstrap/cache
           php artisan key:generate
 
