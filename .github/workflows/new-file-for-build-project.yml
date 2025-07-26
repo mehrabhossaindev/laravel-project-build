@@ -187,7 +187,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ./laravel-project-build
+            cd /var/www/html/laravel-project-build
             php artisan key:generate
             php artisan config:clear
             php artisan config:cache
