@@ -199,11 +199,13 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /var/www/html/laravel-project-build
+            mkdir -p /var/www/html/bootstrap/cache
+            mkdir -p /var/www/html/storage/framework/views
             chmod -R 777 /var/www/html/bootstrap/cache
             chmod -R 777 /var/www/html/storage
             chmod -R 777 storage/framework/views
 
+            cd /var/www/html/laravel-project-build
             php artisan key:generate
             php artisan config:clear
             php artisan cache:clear
