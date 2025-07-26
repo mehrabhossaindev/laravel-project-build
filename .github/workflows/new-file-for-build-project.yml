@@ -199,11 +199,13 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            mkdir -p /var/www/html/bootstrap/cache
-            mkdir -p /var/www/html/storage/framework/views
-            chmod -R 777 /var/www/html/bootstrap/cache
-            chmod -R 777 /var/www/html/storage
-            chmod -R 777 storage/framework/views
+            chown -R ${{ secrets.HOST_USERNAME }}:${{ secrets.HOST_USERNAME }} /var/www/html/laravel-project-build/bootstrap/cache
+            chown -R ${{ secrets.HOST_USERNAME }}:${{ secrets.HOST_USERNAME }} /var/www/html/laravel-project-build/storage/framework/views
+            mkdir -p /var/www/html/laravel-project-build/bootstrap/cache
+            mkdir -p /var/www/html/laravel-project-build/storage/framework/views
+            chmod -R 777 /var/www/html/laravel-project-build/bootstrap/cache
+            chmod -R 777 /var/www/html/laravel-project-build/storage
+            chmod -R 777 /var/www/html/laravel-project-build/storage/framework/views
 
             cd /var/www/html/laravel-project-build
             php artisan key:generate
@@ -211,4 +213,3 @@ jobs:
             php artisan cache:clear
             php artisan migrate --force
             
-      
