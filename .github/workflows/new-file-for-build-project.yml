@@ -140,6 +140,7 @@ jobs:
      runs-on: ubuntu-latest
      needs: test
      environment: staging
+     
      if: github.ref == 'refs/heads/staging'
 
      steps:
@@ -152,7 +153,13 @@ jobs:
       - name: Restore .env Files
         run: |
           mv env .env
-          mv env.testing .env.testing
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=localhost" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=${{secrets.DB_DATABASE}}" >> .env
+          echo "DB_USERNAME=${{secrets.DB_USERNAME}}" >> .env
+          echo "DB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
+
 
       - name: Make Cache Folder
         run: |
@@ -160,6 +167,7 @@ jobs:
           mkdir -p storage/framework/views
           chmod -R 777 bootstrap/cache
           chmod -R 777 storage
+
 
 
       - name: Push Code
@@ -179,6 +187,7 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            cd ./laravel-project-build
             php artisan key:generate
             php artisan config:clear
             php artisan config:cache
